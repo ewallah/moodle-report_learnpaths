@@ -74,6 +74,8 @@ class report_learnpaths_tests extends advanced_testcase {
      * Test page_type_list.
      */
     public function test_page_type_list() {
+        global $CFG;
+        require_once($CFG->dirroot . '/report/learnpaths/lib.php');
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
         $context = context_course::instance($course->id);
