@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<libraries>
+ <library>
+    <location>js/vis-network.min.js</location>
+    <name>vis network</name>
+    <license>(MIT)</license>
+    <version>4.16.0</version>
+    <licenseversion></licenseversion>
+  </library>
+</libraries>
