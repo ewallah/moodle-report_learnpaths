@@ -120,7 +120,7 @@ class main implements renderable, templatable {
      */
     private function buildnode($course) {
         $str = "{id: $course->id, ";
-        $str .= "label: '" . addslashes_js($course->shortname) . "', ";
+        $str .= "group: $course->category, ";
         $str .= "title: '" . addslashes_js($course->fullname) . "'}";
         return $str;
     }
