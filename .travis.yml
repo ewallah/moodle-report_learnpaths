@@ -3,7 +3,7 @@ language: php
 os:
   - linux
 
-dist: focal
+dist: bionic
 
 services:
   - mysql
