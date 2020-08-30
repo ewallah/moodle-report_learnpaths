@@ -24,7 +24,9 @@ php:
 env:
   - DB=pgsql MOODLE_BRANCH=master
   - DB=mysqli MOODLE_BRANCH=master
-
+  global:
+    - IGNORE_PATHS=report/learnpaths/js/vis-network.min.css
+  
 jobs:
   include:
     - php: 7.2
