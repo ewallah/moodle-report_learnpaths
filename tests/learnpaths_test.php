@@ -49,7 +49,7 @@ class report_learnpaths_tests extends advanced_testcase {
 
     /**
      * Test privacy.
-     * @covers report_learnpaths\privacy\provider
+     * @coversDefaultClass report_learnpaths\privacy\provider
      */
     public function test_privacy() {
         $privacy = new report_learnpaths\privacy\provider();
