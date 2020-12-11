@@ -37,7 +37,7 @@ class report_learnpaths_index_tests extends advanced_testcase {
     /**
      * Setup testcase.
      */
-    public function setUp() {
+    public function setUp():void {
         global $CFG;
         $this->resetAfterTest(true);
         $this->setAdminUser();
@@ -62,7 +62,7 @@ class report_learnpaths_index_tests extends advanced_testcase {
         ob_start();
         include($CFG->dirroot . '/report/learnpaths/index.php');
         $html = ob_get_clean();
-        $this->assertContains($course->fullname, $html);
+        $this->assertStringContainsString($course->fullname, $html);
     }
 
     /**
@@ -81,7 +81,7 @@ class report_learnpaths_index_tests extends advanced_testcase {
         ob_start();
         include($CFG->dirroot . '/report/learnpaths/index.php');
         $html = ob_get_clean();
-        $this->assertNotContains($course->fullname, $html);
+        $this->assertStringNotContainsString($course->fullname, $html);
     }
 
     /**
@@ -100,6 +100,6 @@ class report_learnpaths_index_tests extends advanced_testcase {
         ob_start();
         include($CFG->dirroot . '/report/learnpaths/index.php');
         $html = ob_get_clean();
-        $this->assertContains($course->fullname, $html);
+        $this->assertStringContainsString($course->fullname, $html);
     }
 }

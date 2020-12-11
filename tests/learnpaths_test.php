@@ -37,7 +37,7 @@ class report_learnpaths_tests extends advanced_testcase {
     /**
      * Setup testcase.
      */
-    public function setUp() {
+    public function setUp():void {
         global $CFG;
         $this->resetAfterTest(true);
         $this->setAdminUser();
@@ -67,7 +67,7 @@ class report_learnpaths_tests extends advanced_testcase {
         $context = context_course::instance($course1->id);
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
-        $this->assertContains('new vis.Network', $output->render_main($renderable));
+        $this->assertStringContainsString('new vis.Network', $output->render_main($renderable));
     }
 
     /**
@@ -99,7 +99,7 @@ class report_learnpaths_tests extends advanced_testcase {
         $context = context_system::instance();
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
-        $this->assertContains('new vis.Network', $output->render($renderable));
+        $this->assertStringContainsString('new vis.Network', $output->render($renderable));
     }
 
     /**
@@ -120,7 +120,7 @@ class report_learnpaths_tests extends advanced_testcase {
         $context = context_user::instance($user->id);
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
-        $this->assertContains('new vis.Network', $output->render($renderable));
+        $this->assertStringContainsString('new vis.Network', $output->render($renderable));
     }
 
     /**
@@ -138,7 +138,7 @@ class report_learnpaths_tests extends advanced_testcase {
         $context = context_course::instance($course1->id);
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
-        $this->assertContains('new vis.Network', $output->render($renderable));
+        $this->assertStringContainsString('new vis.Network', $output->render($renderable));
     }
 
     /**
@@ -179,7 +179,7 @@ class report_learnpaths_tests extends advanced_testcase {
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
-        $this->assertContains('The user with id ', $event->get_description());
+        $this->assertStringContainsString('The user with id ', $event->get_description());
         $sink = $this->redirectEvents();
         $event->trigger();
         $events = $sink->get_events();
@@ -195,7 +195,7 @@ class report_learnpaths_tests extends advanced_testcase {
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
-        $this->assertContains('The user with id ', $event->get_description());
+        $this->assertStringContainsString('The user with id ', $event->get_description());
         $sink = $this->redirectEvents();
         $event->trigger();
         $events = $sink->get_events();
@@ -210,7 +210,7 @@ class report_learnpaths_tests extends advanced_testcase {
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
-        $this->assertContains('The user with id ', $event->get_description());
+        $this->assertStringContainsString('The user with id ', $event->get_description());
         $sink = $this->redirectEvents();
         $event->trigger();
         $events = $sink->get_events();
