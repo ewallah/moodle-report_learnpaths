@@ -96,9 +96,6 @@ jobs:
       - name: mustache
         run: moodle-plugin-ci mustache
 
-      - name: mustache
-        run: moodle-plugin-ci grunt --tasks=["amd","gherkinlint"]
-
       - name: phpunit 
         run: moodle-plugin-ci phpunit --coverage-text --coverage-clover
 
