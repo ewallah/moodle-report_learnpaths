@@ -93,9 +93,6 @@ jobs:
       - name: mustache
         run: moodle-plugin-ci mustache
 
-      - name: grunt
-        run: moodle-plugin-ci grunt
-
       - name: phpunit 
         run: moodle-plugin-ci phpunit --coverage-text --coverage-clover
 
