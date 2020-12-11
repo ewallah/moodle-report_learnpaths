@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2020062000;
+$plugin->version   = 2020112000;
 $plugin->requires  = 2019052000;
-$plugin->release = '3.7+';
-$plugin->maturity = MATURITY_ALPHA;
+$plugin->release   = '3.8+';
+$plugin->maturity = MATURITY_BETA;
 $plugin->component = 'report_learnpaths';
 $plugin->dependencies = ['enrol_coursecompleted' => ANY_VERSION];

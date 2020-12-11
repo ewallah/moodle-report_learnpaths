@@ -69,6 +69,9 @@ jobs:
       - name: Set AU
         run: sudo locale-gen en_AU.UTF-8
 
+      - name: Dependant plugin
+        run: moodle-plugin-ci add-plugin --clone https://github.com/ewallah/moodle-enrol_coursecompleted.git
+
       - name: Install Moodle
         run: moodle-plugin-ci install --branch ${{ matrix.moodle-branch }} --db-user moodleuser --db-pass moodle --plugin this-plugin
       
