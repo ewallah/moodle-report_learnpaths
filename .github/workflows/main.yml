@@ -1,113 +1,84 @@
 name: Tests
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
-    branches:
-    - main
+on: [push, pull_request]
 
 jobs:
   ci:
-    name: ci
     runs-on: ubuntu-latest
-
-    env:
-      DB: pgsql
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: moodleuser
-          POSTGRES_PASSWORD: moodle
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     strategy:
       fail-fast: false
       matrix:
+        moodle-branch: ['master', 'MOODLE_311_STABLE', 'MOODLE_310_STABLE']
+        php: ['7.4']
+        database: ['mysqli']
         include:
-          - php: '7.4'
-            moodle-branch: 'master'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_311_STABLE'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_310_STABLE'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_39_STABLE'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_38_STABLE'            
+        - php: 8.0
+          moodle-branch: master
+          database: mysqli
+
+    name: ${{ matrix.moodle-branch }}  php ${{ matrix.php }}  ${{ matrix.database }}
 
     steps:
-      - name: Checkout plugin
+      - name: checkout plugin
         uses: actions/checkout@v2
         with:
           path: this-plugin
 
-      - name: Checkout moodle-plugin-ci
-        uses: actions/checkout@v2
+      - name: setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          repository: moodlehq/moodle-plugin-ci
-          path: ci
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, mysqli, gd, zip
+          ini-values: max_input_vars=5000
 
-      - name: Composer install
-        run: cd ci; composer install
-
-      - name: Set path 1
-        run: echo "$(cd ci/bin; pwd)" >> $GITHUB_PATH
-
-      - name: Set path 2
-        run: echo "$(cd ci/vendor/bin; pwd)" >> $GITHUB_PATH
-
-      - name: Set AU
-        run: sudo locale-gen en_AU.UTF-8
+      - name: composer
+        run: |
+           composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
+           echo $(cd ci/bin; pwd) >> $GITHUB_PATH
+           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
+           sudo locale-gen en_AU.UTF-8
+           sudo systemctl start mysql.service
+           sudo apt install sshpass
 
       - name: Dependant plugin
         run: moodle-plugin-ci add-plugin --branch main --clone https://github.com/ewallah/moodle-enrol_coursecompleted.git
 
-      - name: Install Moodle
-        run: moodle-plugin-ci install --branch ${{ matrix.moodle-branch }} --db-user moodleuser --db-pass moodle --plugin this-plugin
-      
+      - name: install Moodle
+        run: moodle-plugin-ci --ansi install -v --db-user=root --db-pass=root --db-host=127.0.0.1 --plugin this-plugin
+        env:
+          DB: ${{ matrix.database }}
+          MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+     
       - name: phplint
-        run: moodle-plugin-ci phplint
+        run: moodle-plugin-ci --ansi phplint
 
       - name: phpcpd
-        run: moodle-plugin-ci phpcpd
+        run: moodle-plugin-ci --ansi phpcpd
 
       - name: phpmd
-        run: moodle-plugin-ci phpmd
+        run: moodle-plugin-ci --ansi phpmd
+
+      - name: phpdoc
+        run: moodle-plugin-ci --ansi phpdoc
 
       - name: codechecker
-        run: moodle-plugin-ci codechecker
+        run: moodle-plugin-ci --ansi codechecker
 
       - name: validate
-        run: moodle-plugin-ci validate
+        run: moodle-plugin-ci --ansi validate
 
       - name: savepoints
-        run: moodle-plugin-ci savepoints
+        run: moodle-plugin-ci --ansi savepoints
 
       - name: mustache
-        run: moodle-plugin-ci mustache
+        run: moodle-plugin-ci --ansi mustache
 
-      - name: phpunit 
-        run: moodle-plugin-ci phpunit --coverage-text --coverage-clover
+      - name: grunt
+        run: moodle-plugin-ci --ansi grunt
+
+      - name: phpunit
+        run: moodle-plugin-ci --ansi phpunit
 
       - name: firefox
-        run: moodle-plugin-ci behat
-      
-      - name: chrome
-        run: moodle-plugin-ci behat --profile chrome
-
-      - name: coveralls
-        env:
-          COVERALLS_RUN_LOCALLY: true
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: moodle-plugin-ci coveralls-upload
-        if: matrix.moodle-branch == 'master'
+        run: moodle-plugin-ci --ansi behat
