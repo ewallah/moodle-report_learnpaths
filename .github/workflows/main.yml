@@ -76,6 +76,7 @@ jobs:
 
       - name: grunt
         run: moodle-plugin-ci --ansi grunt
+        if: matrix.moodle-branch == 'master'
 
       - name: phpunit
         run: moodle-plugin-ci --ansi phpunit
