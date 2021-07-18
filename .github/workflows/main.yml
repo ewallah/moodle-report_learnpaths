@@ -79,7 +79,7 @@ jobs:
         if: matrix.moodle-branch == 'master'
 
       - name: phpunit
-        run: moodle-plugin-ci --ansi phpunit
+        run: moodle-plugin-ci --ansi phpunit --covertage-text || true
 
       - name: firefox
         run: moodle-plugin-ci --ansi behat
