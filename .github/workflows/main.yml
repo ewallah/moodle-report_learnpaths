@@ -39,7 +39,6 @@ jobs:
            echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
            sudo locale-gen en_AU.UTF-8
            sudo systemctl start mysql.service
-           sudo apt install sshpass
 
       - name: Dependant plugin
         run: moodle-plugin-ci add-plugin --branch main --clone https://github.com/ewallah/moodle-enrol_coursecompleted.git
