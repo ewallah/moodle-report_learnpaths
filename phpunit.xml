@@ -34,6 +34,7 @@
             <directory suffix="_test.php">.</directory>
             <file>version.php</file>
             <file>settings.php</file>
+            <file>db/access.php</file>
         </exclude>
     </coverage>
 </phpunit>

@@ -66,6 +66,23 @@ class report_learnpaths_index_tests extends advanced_testcase {
     }
 
     /**
+     * Test index file coursecat.
+     */
+    public function test_index_file_coursecat() {
+        global $CFG, $PAGE;
+        chdir($CFG->dirroot . '/report/learnpaths');
+        $generator = $this->getDataGenerator();
+        $category = $generator->create_category();
+        $user = $generator->create_user();
+        $PAGE->set_title($user->id);
+        $_POST['categoryid'] = $category->id;
+        ob_start();
+        include($CFG->dirroot . '/report/learnpaths/index.php');
+        $html = ob_get_clean();
+        $this->assertStringNotContainsString($category->id, $html);
+    }
+
+    /**
      * Test index file course.
      */
     public function test_index_file_course() {
@@ -81,7 +98,7 @@ class report_learnpaths_index_tests extends advanced_testcase {
         ob_start();
         include($CFG->dirroot . '/report/learnpaths/index.php');
         $html = ob_get_clean();
-        $this->assertStringNotContainsString($course->fullname, $html);
+        $this->assertStringContainsString($course->fullname, $html);
     }
 
     /**

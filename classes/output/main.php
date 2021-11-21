@@ -58,57 +58,68 @@ class main implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $DB;
         $nodes = $edges = [];
-        $nodeoptions = "shape: 'circle', shadow: {enabled: true}, fixed: {x: false, y: false}";
-        $edgeoptions = "length: 150, width: 3, arrows: { to: { enabled: true }}";
+        $title = '';
+        $fields = 'id, courseid, customint1';
+        $params = ['enrol' => 'coursecompleted'];
         switch ($this->context->contextlevel) {
             case CONTEXT_USER:
-                $id = $this->context->instanceid;
-                if ($courses = enrol_get_all_users_courses($id)) {
-                    foreach ($courses as $course) {
-                        $nodes[] = $this->buildnode($course);
-                        $params = ['enrol' => 'coursecompleted', 'customint1' => $course->id];
-                        if ($records = $DB->get_records('enrol', $params, '', 'id, courseid')) {
-                            foreach ($records as $record) {
-                                $edges[] = "{from: $record->courseid, to: $course->id}";
-                            }
-                        }
-                    }
+                $user = \core_user::get_user($this->context->instanceid);
+                $title = $output->user_picture($user, ['class' => 'userpicture']) . fullname($user);
+                $courses = enrol_get_all_users_courses($this->context->instanceid);
+                foreach ($courses as $course) {
+                    $nodes[] = self::buildnode($course);
+                }
+                foreach ($courses as $course) {
+                    $records = $DB->get_records('enrol', ['enrol' => 'coursecompleted', 'customint1' => $course->id], '', $fields);
+                    foreach ($records as $record) {
+                        $fparams = ['userid' => $this->context->instanceid, 'id' => $record->id];
+                        $futu = $DB->count_records('user_enrolments', $fparams) > 0 ? ', dashes: 1' : '';
+                        $edges[] = "{id: $record->id, to: $record->courseid, from: $course->id $futu}";
+                   }
                 }
                 break;
             case CONTEXT_COURSE:
                 $id = $this->context->instanceid;
-                $nodes[] = "{id: $id, label: $id}";
-                $params = ['enrol' => 'coursecompleted', 'customint1' => $id];
-                if ($records = $DB->get_records('enrol', $params, '', 'id, courseid')) {
-                    foreach ($records as $record) {
-                        $nodes[] = "{id: $record->courseid, label: $record->courseid}";
-                        $edges[] = "{from: $record->courseid, to: $id}";
-                    }
+                $course = get_course($id); 
+                $title = $course->fullname;
+                $all = [$id]; 
+                $records = $DB->get_records('enrol', ['enrol' => 'coursecompleted', 'customint1' => $id], '', $fields);
+                foreach ($records as $record) {
+                    $all[] = $record->courseid;
+                    $edges[] = "{id: $record->id, to: $record->courseid, from: $id}";
                 }
-                $params = ['enrol' => 'coursecompleted', 'courseid' => $id];
-                if ($records = $DB->get_records('enrol', $params, '', 'id, customint1')) {
-                    foreach ($records as $record) {
-                        $nodes[] = "{id: $record->customint1, label: $record->customint1}";
-                        $edges[] = "{from: $id, to: $record->customint1}";
-                    }
+                $records = $DB->get_records('enrol', ['enrol' => 'coursecompleted', 'courseid' => $id], '', $fields);
+                foreach ($records as $record) {
+                    $all[] = $record->customint1;
+                    $edges[] = "{id: $record->id, to: $id, from: $record->customint1}";
+                }
+                $all = array_unique(array_values($all));
+                foreach ($all as $value) {
+                    $nodes[] = self::buildnode(get_course($value));
                 }
                 break;
             default:
-                $courses = get_courses();
-                foreach ($courses as $course) {
-                    $nodes[] = $this->buildnode($course);
-                }
-                if ($records = $DB->get_records('enrol', ['enrol' => 'coursecompleted'], '', 'id, courseid, customint1')) {
-                    foreach ($records as $record) {
-                        $edges[] = "{from: $record->customint1, to: $record->courseid}";
+                $all = ($this->context->contextlevel == CONTEXT_COURSECAT) ? $this->context->instanceid : 'all';
+                foreach (get_courses($all) as $course) {
+                    if ($course->id != 1) {
+                        $nodes[] = self::buildnode($course);
                     }
+                }
+                $records = $DB->get_records('enrol', $params, '', $fields);
+                foreach ($records as $record) {
+                    $params['courseid'] = $record->courseid;
+                    $params['customint1'] = $record->customint1;
+                    $cnt = $DB->count_records('enrol', $params);
+                    $cnt = $cnt > 0 ? $cnt : 1;
+                    $edges[] = "{id: $record->id, from: $record->customint1, to: $record->courseid, value: $cnt}";
                 }
         }
         return [
+            'title' => $title,
             'nodes' => implode(', ', $nodes),
             'edges' => implode(', ', $edges),
-            'nodeoptions' => $nodeoptions,
-            'edgeoptions' => $edgeoptions
+            'nodeoptions' => "shape: 'circle', shadow: {enabled: true}, fixed: {x: false, y: false}",
+            'edgeoptions' => "length: 300, width: 1, physics: true, smooth: true, arrows: { to: { enabled: true }}"
         ];
     }
 
@@ -118,9 +129,10 @@ class main implements renderable, templatable {
      * @param stdClass $course
      * @return string
      */
-    private function buildnode($course) {
-        $str = "{id: $course->id, ";
-        $str .= "group: $course->category, ";
+    private static function buildnode($course) {
+        $str = "{id: $course->id,";
+        $str .= "group: $course->category,";
+        $str .= "label: '$course->idnumber',";
         $str .= "title: '" . addslashes_js($course->fullname) . "'}";
         return $str;
     }

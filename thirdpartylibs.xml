@@ -3,8 +3,8 @@
  <library>
     <location>js/vis-network.min.js</location>
     <name>vis network</name>
-    <license>(MIT)</license>
-    <version>4.16.0</version>
-    <licenseversion></licenseversion>
+    <license>(Apache)</license>
+    <version>9.1.0</version>
+    <licenseversion>2.0</licenseversion>
   </library>
 </libraries>

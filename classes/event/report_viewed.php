@@ -63,7 +63,9 @@ class report_viewed extends \core\event\base {
             case CONTEXT_USER:
                 return "The user with id '$this->userid' viewed the learning path of the user with id '$this->relateduserid'.";
             case CONTEXT_COURSE:
-                return "The user with id '$this->userid' viewed the learning path containing the course with id '$this->courseid'.";
+                return "The user with id '$this->userid' viewed the learning path of the course with id '$this->courseid'.";
+            case CONTEXT_COURSECAT:
+                return "The user with id '$this->userid' viewed the learning path of the course category with id $this->contextinstanceid.";
             default:
                 return "The user with id '$this->userid' viewed all possible learning paths.";
         }
@@ -80,6 +82,8 @@ class report_viewed extends \core\event\base {
                return new \moodle_url('/report/learnpaths/index.php',  ['userid' => $this->relateduserid]);
             case CONTEXT_COURSE:
                return new \moodle_url('/report/learnpaths/index.php', ['courseid' => $this->courseid]);
+            case CONTEXT_COURSECAT:
+                return new \moodle_url('/report/learnpaths/index.php', ['categoryid' => $this->contextinstanceid]);
             default:
                return new \moodle_url('/report/learnpaths/index.php');
         }

@@ -27,18 +27,24 @@ require_once($CFG->libdir.'/adminlib.php');
 
 $courseid = optional_param('courseid', 1, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
+$categoryid = optional_param('categoryid', 0, PARAM_INT);
 
 $params = [];
 if ($userid > 0) {
-    $context = context_user::instance($userid);
+    $context = \context_user::instance($userid);
     $params['userid'] = $userid;
 } else if ($courseid > 1) {
-    $context = context_course::instance($courseid);
+    $context = \context_course::instance($courseid);
     $params['courseid'] = $courseid;
     $course = get_course($courseid);
     $PAGE->set_course($course);
 } else {
-    $context = context_system::instance();
+    if ($categoryid > 0) {
+        $params['categoryid'] = $categoryid;
+        $context = \context_coursecat::instance($categoryid);
+    } else {
+        $context = \context_system::instance();
+    }
 }
 
 require_login();

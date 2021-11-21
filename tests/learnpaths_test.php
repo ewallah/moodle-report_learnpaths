@@ -145,26 +145,21 @@ class report_learnpaths_tests extends advanced_testcase {
      * Tests the report navigation as an admin.
      */
     public function test_navigation() {
-        global $CFG, $DB, $PAGE, $USER;
+        global $CFG, $PAGE, $USER;
         require_once($CFG->dirroot . '/report/learnpaths/lib.php');
         $generator = $this->getDataGenerator();
+        $category = $this->getDataGenerator()->create_category();
+        $context = context_coursecat::instance($category->id);
         $course = $generator->create_course();
-        $context = context_course::instance($course->id);
         $PAGE->set_url('/course/view.php', ['id' => $course->id]);
         $tree = new \global_navigation($PAGE);
+        \report_learnpaths_extend_navigation_category_settings($tree, $context);
+        $context = context_course::instance($course->id);
         \report_learnpaths_extend_navigation_course($tree, $course, $context);
         $user = $generator->create_user();
         $tree = new \core_user\output\myprofile\tree();
         $this->assertTrue(report_learnpaths_myprofile_navigation($tree, $user, true, $course));
-        $teacher = $generator->create_user();
-        $role = $DB->get_record('role', ['shortname' => 'editingteacher']);
-        $generator->enrol_user($teacher->id, $course->id, $role->shortname);
         $tree = new \core_user\output\myprofile\tree();
-        $this->assertTrue(report_learnpaths_myprofile_navigation($tree, $teacher, true, $course));
-        $this->setUser($teacher);
-        $this->assertFalse(report_learnpaths_myprofile_navigation($tree, $user, false, $course));
-        $this->setAdminUser();
-        $this->assertFalse(report_learnpaths_myprofile_navigation($tree, $teacher, false, $course));
         $this->setGuestUser();
         $this->assertFalse(report_learnpaths_myprofile_navigation($tree, $USER, true, $course));
     }
@@ -174,6 +169,22 @@ class report_learnpaths_tests extends advanced_testcase {
      * @covers report_learnpaths\event\report_viewed
      */
     public function test_report_viewed() {
+        $categoryid = $this->getDataGenerator()->create_category()->id;
+        $context = context_coursecat::instance($categoryid);
+        require_capability('report/learnpaths:view', $context);
+        $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
+        $this->assertEquals('Learning path report viewed', $event->get_name());
+        $this->assertStringContainsString('The user with id ', $event->get_description());
+        $sink = $this->redirectEvents();
+        $event->trigger();
+        $events = $sink->get_events();
+        $event = reset($events);
+        $this->assertInstanceOf('\report_learnpaths\event\report_viewed', $event);
+        $this->assertEquals($context, $event->get_context());
+        $url = new moodle_url('/report/learnpaths/index.php', ['categoryid' => $categoryid]);
+        $this->assertEquals($url, $event->get_url());
+        $this->assertEventContextNotUsed($event);
+
         $courseid = $this->getDataGenerator()->create_course()->id;
         $context = context_course::instance($courseid);
         require_capability('report/learnpaths:view', $context);

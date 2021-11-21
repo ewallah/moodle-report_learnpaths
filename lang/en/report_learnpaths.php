@@ -24,7 +24,6 @@
 
 $string['eventreportviewed'] = 'Learning path report viewed';
 $string['learnpaths:view'] = 'View learning path';
-$string['mypaths'] = 'My learning paths';
 $string['page-report-learnpaths-index'] = 'Course learnpaths report';
 $string['page-report-learnpaths-user'] = 'User learnpaths report';
 $string['page-report-learnpaths-x'] = 'Any learnpaths report';

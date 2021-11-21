@@ -39,6 +39,21 @@ function report_learnpaths_extend_navigation_course($navigation, $course, $conte
     }
 }
 
+
+/**
+ * This function extends the category navigation to add learnpath reports.
+ *
+ * @param navigation_node $navigation The navigation node to extend
+ * @param context $context The context of the course category
+ */
+function report_learnpaths_extend_navigation_category_settings($navigation, $context) {
+    if (has_capability('report/learnpaths:view', $context)) {
+        $url = new \moodle_url('/report/learnpaths/index.php', ['courseid' => 1, 'categoryid' => $context->instanceid]);
+        $str = get_string('pluginname', 'report_learnpaths');
+        $navigation->add($str, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', ''));
+    }
+}
+
 /**
  * Add nodes to myprofile page.
  *
@@ -50,15 +65,11 @@ function report_learnpaths_extend_navigation_course($navigation, $course, $conte
  * @return bool
  */
 function report_learnpaths_myprofile_navigation(\core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
-    if (isguestuser($user) or !$iscurrentuser) {
-        return false;
-    }
-    $context = context_user::instance($user->id);
     $return = false;
-    if (has_capability('report/learnpaths:view', $context)) {
-        $str = get_string('mypaths', 'report_learnpaths');
+    if (!isguestuser($user) && has_capability('report/learnpaths:view', context_user::instance($user->id))) {
+        $str = get_string('pluginname', 'report_learnpaths');
         $url = new \moodle_url('/report/learnpaths/index.php', ['userid' => $user->id]);
-        $node = new \core_user\output\myprofile\node('reports', 'learnpaths', $str, null, $url);
+        $node = new \core_user\output\myprofile\node('reports', 'mylearnpaths', $str, null, $url);
         $tree->add_node($node);
         $return = true;
     }
