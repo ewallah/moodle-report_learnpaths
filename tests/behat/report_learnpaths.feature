@@ -64,7 +64,7 @@ Feature: learnpaths report
     Then I should not see "Error"
 
   @javascript
-  Scenario: Show learning path in user level 
+  Scenario: Show learning path in user level
     Given I am on "Course 1" course homepage
     And I navigate to course participants
     And I follow "Student 1"
