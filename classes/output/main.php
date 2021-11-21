@@ -75,14 +75,14 @@ class main implements renderable, templatable {
                         $fparams = ['userid' => $this->context->instanceid, 'id' => $record->id];
                         $futu = $DB->count_records('user_enrolments', $fparams) > 0 ? ', dashes: 1' : '';
                         $edges[] = "{id: $record->id, to: $record->courseid, from: $course->id $futu}";
-                   }
+                    }
                 }
                 break;
             case CONTEXT_COURSE:
                 $id = $this->context->instanceid;
-                $course = get_course($id); 
+                $course = get_course($id);
                 $title = $course->fullname;
-                $all = [$id]; 
+                $all = [$id];
                 $records = $DB->get_records('enrol', ['enrol' => 'coursecompleted', 'customint1' => $id], '', $fields);
                 foreach ($records as $record) {
                     $all[] = $record->courseid;

@@ -65,7 +65,7 @@ class report_viewed extends \core\event\base {
             case CONTEXT_COURSE:
                 return "The user with id '$this->userid' viewed the learning path of the course with id '$this->courseid'.";
             case CONTEXT_COURSECAT:
-                return "The user with id '$this->userid' viewed the learning path of the course category with id $this->contextinstanceid.";
+                return "The user with id '$this->userid' viewed learning path of the category with id $this->contextinstanceid.";
             default:
                 return "The user with id '$this->userid' viewed all possible learning paths.";
         }
