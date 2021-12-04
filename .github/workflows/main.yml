@@ -9,13 +9,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        moodle-branch: ['master', 'MOODLE_311_STABLE']
+        moodle-branch: ['MOODLE_311_STABLE']
         php: ['7.4']
         database: ['mysqli']
-        include:
-        - php: 8.0
-          moodle-branch: master
-          database: mysqli
 
     name: ${{ matrix.moodle-branch }}  php ${{ matrix.php }}  ${{ matrix.database }}
 
@@ -39,6 +35,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring, mysqli, gd, zip
           ini-values: max_input_vars=5000
+          coverage: xdebug
 
       - name: composer
         run: |
@@ -55,35 +52,46 @@ jobs:
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}
      
       - name: phplint
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi phplint
 
       - name: phpcpd
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi phpcpd
 
       - name: phpmd
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi phpmd
 
       - name: phpdoc
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi phpdoc
 
       - name: codechecker
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi codechecker
 
       - name: validate
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi validate
 
       - name: savepoints
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi savepoints
 
+      - name: grunt
+        if: ${{ always() }}
+        run: moodle-plugin-ci --ansi grunt
+
       - name: mustache
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi mustache
 
-      - name: grunt
-        run: moodle-plugin-ci --ansi grunt
-        if: matrix.moodle-branch == 'master'
-
       - name: phpunit
-        run: moodle-plugin-ci --ansi phpunit --covertage-text || true
+        continue-on-error: true
+        if: ${{ always() }}
+        run: moodle-plugin-ci --ansi phpunit --coverage-text
 
-      - name: firefox
+      - name: behat
+        if: ${{ always() }}
         run: moodle-plugin-ci --ansi behat --profile=chrome
