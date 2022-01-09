@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
+namespace report_learnpaths;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -30,9 +32,8 @@ defined('MOODLE_INTERNAL') || die();
  * @package    report_learnpaths
  * @copyright  2020 Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
- * @coversDefaultClass report_learnpaths
  */
-class report_learnpaths_index_tests extends advanced_testcase {
+class index_test extends \advanced_testcase {
 
     /**
      * Setup testcase.
