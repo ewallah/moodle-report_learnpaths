@@ -24,8 +24,6 @@
 
 namespace report_learnpaths\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy main class.
  *

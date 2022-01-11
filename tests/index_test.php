@@ -24,7 +24,7 @@
 
 namespace report_learnpaths;
 
-defined('MOODLE_INTERNAL') || die();
+use advanced_testcase;
 
 /**
  * Class for report learnpaths.
@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2020 Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
-class index_test extends \advanced_testcase {
+class index_test extends advanced_testcase {
 
     /**
      * Setup testcase.

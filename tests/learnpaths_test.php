@@ -23,8 +23,11 @@
  */
 namespace report_learnpaths;
 
-defined('MOODLE_INTERNAL') || die();
-
+use advanced_testcase;
+use context_course;
+use context_coursecat;
+use context_system;
+use context_user;
 use moodle_url;
 
 /**
@@ -34,7 +37,7 @@ use moodle_url;
  * @copyright  2020 Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
-class learnpaths_test extends \advanced_testcase {
+class learnpaths_test extends advanced_testcase {
 
     /**
      * Setup testcase.
@@ -53,7 +56,7 @@ class learnpaths_test extends \advanced_testcase {
      * Test privacy.
      */
     public function test_privacy() {
-        $privacy = new \report_learnpaths\privacy\provider();
+        $privacy = new privacy\provider();
         $this->assertEquals($privacy->get_reason(), 'privacy:metadata');
     }
 
@@ -64,7 +67,7 @@ class learnpaths_test extends \advanced_testcase {
         global $PAGE;
         $generator = $this->getDataGenerator();
         $course1 = $generator->create_course();
-        $context = \context_course::instance($course1->id);
+        $context = context_course::instance($course1->id);
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
         $this->assertStringContainsString('new vis.Network', $output->render_main($renderable));
@@ -78,8 +81,8 @@ class learnpaths_test extends \advanced_testcase {
         require_once($CFG->dirroot . '/report/learnpaths/lib.php');
         $generator = $this->getDataGenerator();
         $course = $generator->create_course();
-        $context = \context_course::instance($course->id);
-        $this->assertCount(5, report_learnpaths_page_type_list('report', \context_system::instance(), $context));
+        $context = context_course::instance($course->id);
+        $this->assertCount(5, report_learnpaths_page_type_list('report', context_system::instance(), $context));
     }
 
     /**
@@ -95,7 +98,7 @@ class learnpaths_test extends \advanced_testcase {
         $plugin->add_instance($course2, ['customint1' => $course1->id]);
         $records = $DB->get_records('enrol', ['enrol' => 'coursecompleted'], '', 'id, courseid, customint1');
         $this->assertCount(2, $records);
-        $context = \context_system::instance();
+        $context = context_system::instance();
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
         $this->assertStringContainsString('new vis.Network', $output->render($renderable));
@@ -115,7 +118,7 @@ class learnpaths_test extends \advanced_testcase {
         $user = $generator->create_user();
         $generator->enrol_user($user->id, $course1->id);
         $generator->enrol_user($user->id, $course2->id);
-        $context = \context_user::instance($user->id);
+        $context = context_user::instance($user->id);
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
         $this->assertStringContainsString('new vis.Network', $output->render($renderable));
@@ -132,7 +135,7 @@ class learnpaths_test extends \advanced_testcase {
         $plugin = enrol_get_plugin('coursecompleted');
         $plugin->add_instance($course1, ['customint1' => $course2->id]);
         $plugin->add_instance($course2, ['customint1' => $course1->id]);
-        $context = \context_course::instance($course1->id);
+        $context = context_course::instance($course1->id);
         $renderable = new \report_learnpaths\output\main($context);
         $output = $PAGE->get_renderer('report_learnpaths');
         $this->assertStringContainsString('new vis.Network', $output->render($renderable));
@@ -146,12 +149,12 @@ class learnpaths_test extends \advanced_testcase {
         require_once($CFG->dirroot . '/report/learnpaths/lib.php');
         $generator = $this->getDataGenerator();
         $category = $this->getDataGenerator()->create_category();
-        $context = \context_coursecat::instance($category->id);
+        $context = context_coursecat::instance($category->id);
         $course = $generator->create_course();
         $PAGE->set_url('/course/view.php', ['id' => $course->id]);
         $tree = new \global_navigation($PAGE);
         \report_learnpaths_extend_navigation_category_settings($tree, $context);
-        $context = \context_course::instance($course->id);
+        $context = context_course::instance($course->id);
         \report_learnpaths_extend_navigation_course($tree, $course, $context);
         $user = $generator->create_user();
         $tree = new \core_user\output\myprofile\tree();
@@ -166,7 +169,7 @@ class learnpaths_test extends \advanced_testcase {
      */
     public function test_report_viewed() {
         $categoryid = $this->getDataGenerator()->create_category()->id;
-        $context = \context_coursecat::instance($categoryid);
+        $context = context_coursecat::instance($categoryid);
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
@@ -182,7 +185,7 @@ class learnpaths_test extends \advanced_testcase {
         $this->assertEventContextNotUsed($event);
 
         $courseid = $this->getDataGenerator()->create_course()->id;
-        $context = \context_course::instance($courseid);
+        $context = context_course::instance($courseid);
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
@@ -198,7 +201,7 @@ class learnpaths_test extends \advanced_testcase {
         $this->assertEventContextNotUsed($event);
 
         $userid = $this->getDataGenerator()->create_user()->id;
-        $context = \context_user::instance($userid);
+        $context = context_user::instance($userid);
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
@@ -213,7 +216,7 @@ class learnpaths_test extends \advanced_testcase {
         $this->assertEquals($url, $event->get_url());
         $this->assertEventContextNotUsed($event);
 
-        $context = \context_system::instance();
+        $context = context_system::instance();
         require_capability('report/learnpaths:view', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());

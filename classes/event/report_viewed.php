@@ -21,9 +21,7 @@
  * @copyright 2020 Renaat Debleu <info@eWallah.net>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace report_learnpaths\event;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * The learning paths report viewed event.

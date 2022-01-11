@@ -22,8 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace report_learnpaths\output;
-defined('MOODLE_INTERNAL') || die();
 
+use core_user;
 use renderable;
 use renderer_base;
 use templatable;
@@ -52,7 +52,7 @@ class main implements renderable, templatable {
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
-     * @param \renderer_base $output
+     * @param renderer_base $output
      * @return array
      */
     public function export_for_template(renderer_base $output) {
@@ -63,7 +63,7 @@ class main implements renderable, templatable {
         $params = ['enrol' => 'coursecompleted'];
         switch ($this->context->contextlevel) {
             case CONTEXT_USER:
-                $user = \core_user::get_user($this->context->instanceid);
+                $user = core_user::get_user($this->context->instanceid);
                 $title = $output->user_picture($user, ['class' => 'userpicture']) . fullname($user);
                 $courses = enrol_get_all_users_courses($this->context->instanceid);
                 foreach ($courses as $course) {
