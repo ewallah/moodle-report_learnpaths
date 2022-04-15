@@ -50,6 +50,8 @@ class index_test extends advanced_testcase {
 
     /**
      * Test index file global.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_global() {
         global $CFG, $DB, $PAGE;
@@ -68,6 +70,8 @@ class index_test extends advanced_testcase {
 
     /**
      * Test index file coursecat.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_coursecat() {
         global $CFG, $PAGE;
@@ -85,6 +89,8 @@ class index_test extends advanced_testcase {
 
     /**
      * Test index file course.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_course() {
         global $CFG, $DB, $PAGE;
@@ -104,6 +110,8 @@ class index_test extends advanced_testcase {
 
     /**
      * Test index file user.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_user() {
         global $CFG, $DB, $PAGE;
