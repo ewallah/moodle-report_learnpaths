@@ -54,6 +54,7 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test privacy.
+     * @covers \report_learnpaths\privacy\provider
      */
     public function test_privacy() {
         $privacy = new privacy\provider();
@@ -62,6 +63,8 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderer.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_renderer() {
         global $PAGE;
@@ -75,6 +78,8 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test page_type_list.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_page_type_list() {
         global $CFG;
@@ -87,6 +92,8 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderable.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_network1() {
         global $DB, $PAGE;
@@ -106,6 +113,8 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderable.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_network2() {
         global $PAGE;
@@ -126,6 +135,8 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderable.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_network3() {
         global $PAGE;
@@ -143,6 +154,8 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Tests the report navigation as an admin.
+     * @covers \report_learnpaths\output\main
+     * @covers \report_learnpaths\output\renderer
      */
     public function test_navigation() {
         global $CFG, $PAGE, $USER;
@@ -166,6 +179,7 @@ class learnpaths_test extends advanced_testcase {
 
     /**
      * Test the report viewed event.
+     * @covers \report_learnpaths\event\report_viewed
      */
     public function test_report_viewed() {
         $categoryid = $this->getDataGenerator()->create_category()->id;
