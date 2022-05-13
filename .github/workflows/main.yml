@@ -9,27 +9,42 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        moodle-branch: ['MOODLE_311_STABLE']
-        php: ['7.4']
+        moodle-branch: ['MOODLE_311_STABLE', 'MOODLE_400_STABLE']
+        php: ['8.0']
         database: ['mysqli']
-        include:
-        - php: 8.0
-          moodle-branch: MOODLE_311_STABLE
-          database: mysqli
 
     name: ${{ matrix.moodle-branch }}  php ${{ matrix.php }}  ${{ matrix.database }}
 
     steps:
       - name: checkout plugin
+        if: ${{ matrix.moodle-branch == 'MOODLE_311_STABLE'}}
         uses: actions/checkout@v2
         with:
+          ref: 'main'
+          path: this-plugin
+
+      - name: checkout plugin
+        if: ${{ matrix.moodle-branch == 'MOODLE_400_STABLE'}}
+        uses: actions/checkout@v2
+        with:
+          ref: 'MOODLE_400_STABLE'
           path: this-plugin
 
       - name: add plugin
+        if: ${{ matrix.moodle-branch == 'MOODLE_311_STABLE'}}
         uses: actions/checkout@v2
         with:
           repository: ewallah/moodle-enrol_coursecompleted.git
           ref: 'main'
+          token: ${{ secrets.PAT }}
+          path: extras/enrol_enrolcoursecompleted
+
+      - name: add plugin
+        if: ${{ matrix.moodle-branch == 'MOODLE_400_STABLE'}}
+        uses: actions/checkout@v2
+        with:
+          repository: ewallah/moodle-enrol_coursecompleted.git
+          ref: 'MOODLE_40_STABLE'
           token: ${{ secrets.PAT }}
           path: extras/enrol_enrolcoursecompleted
 
@@ -94,8 +109,15 @@ jobs:
 
       - name: phpunit
         if: ${{ always() }}
-        run: moodle-plugin-ci --ansi phpunit --coverage-text
+        run: moodle-plugin-ci --ansi phpunit --coverage-text --coverage-clover
 
       - name: behat
         if: ${{ matrix.moodle-branch != 'master'}}
         run: moodle-plugin-ci --ansi behat --profile=chrome
+
+      - name: coveralls
+        env:
+          COVERALLS_RUN_LOCALLY: true
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: moodle-plugin-ci coveralls-upload
+
