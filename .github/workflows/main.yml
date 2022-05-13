@@ -120,4 +120,4 @@ jobs:
         env:
           COVERALLS_RUN_LOCALLY: true
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: php-coveralls --coverage_clover=moodle-report_growth/moodle/report/growth/build/logs/clover.xml -v
+        run: php-coveralls --coverage_clover=moodle/report/growth/build/logs/clover.xml -v
