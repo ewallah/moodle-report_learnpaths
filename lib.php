@@ -84,9 +84,9 @@ function report_learnpaths_myprofile_navigation(\core_user\output\myprofile\tree
  */
 function report_learnpaths_page_type_list($pagetype, $parentcontext, $currentcontext) {
     return [
-        '*'                       => get_string('page-x', 'pagetype'),
-        'report-*'                => get_string('page-report-x', 'pagetype'),
-        'report-learnpaths-*'     => get_string('page-report-learnpaths-x', 'report_learnpaths'),
+        '*' => get_string('page-x', 'pagetype'),
+        'report-*' => get_string('page-report-x', 'pagetype'),
+        'report-learnpaths-*' => get_string('page-report-learnpaths-x', 'report_learnpaths'),
         'report-learnpaths-index' => get_string('page-report-learnpaths-index', 'report_learnpaths'),
-        'report-learnpaths-user'  => get_string('page-report-learnpaths-user', 'report_learnpaths')];
+        'report-learnpaths-user' => get_string('page-report-learnpaths-user', 'report_learnpaths')];
 }
