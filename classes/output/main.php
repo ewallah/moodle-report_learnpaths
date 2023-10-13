@@ -119,7 +119,7 @@ class main implements renderable, templatable {
             'nodes' => implode(', ', $nodes),
             'edges' => implode(', ', $edges),
             'nodeoptions' => "shape: 'circle', shadow: {enabled: true}, fixed: {x: false, y: false}",
-            'edgeoptions' => "length: 300, width: 1, physics: true, smooth: true, arrows: { to: { enabled: true }}"
+            'edgeoptions' => "length: 300, width: 1, physics: true, smooth: true, arrows: { to: { enabled: true }}",
         ];
     }
 
