@@ -30,11 +30,14 @@ $userid = optional_param('userid', 0, PARAM_INT);
 $categoryid = optional_param('categoryid', 0, PARAM_INT);
 
 $params = [];
+require_login();
 if ($userid > 0) {
     $context = \context_user::instance($userid);
     $params['userid'] = $userid;
+    require_capability('report/learnpaths:viewuser', $context);
 } else if ($courseid > 1) {
     $context = \context_course::instance($courseid);
+    require_capability('report/learnpaths:viewcourse', $context);
     $params['courseid'] = $courseid;
     $course = get_course($courseid);
     $PAGE->set_course($course);
@@ -45,10 +48,9 @@ if ($userid > 0) {
     } else {
         $context = \context_system::instance();
     }
+    require_capability('report/learnpaths:viewsystem', $context);
 }
 
-require_login();
-require_capability('report/learnpaths:view', $context);
 
 $renderable = new \report_learnpaths\output\main($context);
 $str = get_string('pluginname', 'report_learnpaths');

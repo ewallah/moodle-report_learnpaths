@@ -184,7 +184,7 @@ class learnpaths_test extends advanced_testcase {
     public function test_report_viewed() {
         $categoryid = $this->getDataGenerator()->create_category()->id;
         $context = context_coursecat::instance($categoryid);
-        require_capability('report/learnpaths:view', $context);
+        require_capability('report/learnpaths:viewsystem', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
         $this->assertStringContainsString('The user with id ', $event->get_description());
@@ -200,7 +200,7 @@ class learnpaths_test extends advanced_testcase {
 
         $courseid = $this->getDataGenerator()->create_course()->id;
         $context = context_course::instance($courseid);
-        require_capability('report/learnpaths:view', $context);
+        require_capability('report/learnpaths:viewcourse', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
         $this->assertStringContainsString('The user with id ', $event->get_description());
@@ -216,7 +216,7 @@ class learnpaths_test extends advanced_testcase {
 
         $userid = $this->getDataGenerator()->create_user()->id;
         $context = context_user::instance($userid);
-        require_capability('report/learnpaths:view', $context);
+        require_capability('report/learnpaths:viewuser', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
         $this->assertStringContainsString('The user with id ', $event->get_description());
@@ -231,7 +231,7 @@ class learnpaths_test extends advanced_testcase {
         $this->assertEventContextNotUsed($event);
 
         $context = context_system::instance();
-        require_capability('report/learnpaths:view', $context);
+        require_capability('report/learnpaths:viewsystem', $context);
         $event = \report_learnpaths\event\report_viewed::create(['context' => $context]);
         $this->assertEquals('Learning path report viewed', $event->get_name());
         $this->assertStringContainsString('The user with id ', $event->get_description());

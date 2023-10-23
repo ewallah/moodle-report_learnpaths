@@ -30,7 +30,7 @@
  * @param stdClass $context The context of the course
  */
 function report_learnpaths_extend_navigation_course($navigation, $course, $context) {
-    if (has_capability('report/learnpaths:view', $context)) {
+    if (has_capability('report/learnpaths:viewcourse', $context)) {
         $url = new \moodle_url('/report/learnpaths/index.php', ['courseid' => $course->id]);
         $str = get_string('pluginname', 'report_learnpaths');
         $navigation->add($str, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', ''));
@@ -45,7 +45,7 @@ function report_learnpaths_extend_navigation_course($navigation, $course, $conte
  * @param context $context The context of the course category
  */
 function report_learnpaths_extend_navigation_category_settings($navigation, $context) {
-    if (has_capability('report/learnpaths:view', $context)) {
+    if (has_capability('report/learnpaths:viewsystem', $context)) {
         $url = new \moodle_url('/report/learnpaths/index.php', ['courseid' => 1, 'categoryid' => $context->instanceid]);
         $str = get_string('pluginname', 'report_learnpaths');
         $navigation->add($str, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', ''));
@@ -64,7 +64,7 @@ function report_learnpaths_extend_navigation_category_settings($navigation, $con
  */
 function report_learnpaths_myprofile_navigation(\core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
     $return = false;
-    if (!isguestuser($user) && has_capability('report/learnpaths:view', context_user::instance($user->id))) {
+    if (!isguestuser($user) && has_capability('report/learnpaths:viewuser', context_user::instance($user->id))) {
         $str = get_string('pluginname', 'report_learnpaths');
         $url = new \moodle_url('/report/learnpaths/index.php', ['userid' => $user->id]);
         $node = new \core_user\output\myprofile\node('reports', 'mylearnpaths', $str, null, $url);
