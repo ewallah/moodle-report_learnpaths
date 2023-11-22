@@ -53,7 +53,7 @@ class index_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_index_file_global() {
+    public function test_index_file_global(): void {
         global $CFG, $DB, $PAGE;
         chdir($CFG->dirroot . '/report/learnpaths');
         $generator = $this->getDataGenerator();
@@ -73,7 +73,7 @@ class index_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_index_file_coursecat() {
+    public function test_index_file_coursecat(): void {
         global $CFG, $PAGE;
         chdir($CFG->dirroot . '/report/learnpaths');
         $generator = $this->getDataGenerator();
@@ -92,7 +92,7 @@ class index_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_index_file_course() {
+    public function test_index_file_course(): void {
         global $CFG, $DB, $PAGE;
         chdir($CFG->dirroot . '/report/learnpaths');
         $generator = $this->getDataGenerator();
@@ -113,7 +113,7 @@ class index_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_index_file_user() {
+    public function test_index_file_user(): void {
         global $CFG, $DB, $PAGE;
         chdir($CFG->dirroot . '/report/learnpaths');
         $generator = $this->getDataGenerator();

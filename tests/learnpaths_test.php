@@ -56,7 +56,7 @@ class learnpaths_test extends advanced_testcase {
      * Test privacy.
      * @covers \report_learnpaths\privacy\provider
      */
-    public function test_privacy() {
+    public function test_privacy(): void {
         $privacy = new privacy\provider();
         $this->assertEquals($privacy->get_reason(), 'privacy:metadata');
     }
@@ -66,7 +66,7 @@ class learnpaths_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_renderer() {
+    public function test_renderer(): void {
         global $PAGE;
         $generator = $this->getDataGenerator();
         $course1 = $generator->create_course();
@@ -81,7 +81,7 @@ class learnpaths_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_page_type_list() {
+    public function test_page_type_list(): void {
         global $CFG;
         require_once($CFG->dirroot . '/report/learnpaths/lib.php');
         $generator = $this->getDataGenerator();
@@ -95,7 +95,7 @@ class learnpaths_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_network1() {
+    public function test_network1(): void {
         global $DB, $PAGE;
         $generator = $this->getDataGenerator();
         $course1 = $generator->create_course();
@@ -116,7 +116,7 @@ class learnpaths_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_network2() {
+    public function test_network2(): void {
         global $PAGE;
         $generator = $this->getDataGenerator();
         $course1 = $generator->create_course();
@@ -138,7 +138,7 @@ class learnpaths_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_network3() {
+    public function test_network3(): void {
         global $PAGE;
         $generator = $this->getDataGenerator();
         $course1 = $generator->create_course();
@@ -157,7 +157,7 @@ class learnpaths_test extends advanced_testcase {
      * @covers \report_learnpaths\output\main
      * @covers \report_learnpaths\output\renderer
      */
-    public function test_navigation() {
+    public function test_navigation(): void {
         global $CFG, $PAGE, $USER;
         require_once($CFG->dirroot . '/report/learnpaths/lib.php');
         $generator = $this->getDataGenerator();
@@ -181,7 +181,7 @@ class learnpaths_test extends advanced_testcase {
      * Test the report viewed event.
      * @covers \report_learnpaths\event\report_viewed
      */
-    public function test_report_viewed() {
+    public function test_report_viewed(): void {
         $categoryid = $this->getDataGenerator()->create_category()->id;
         $context = context_coursecat::instance($categoryid);
         require_capability('report/learnpaths:viewsystem', $context);
