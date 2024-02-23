@@ -38,7 +38,7 @@ class index_test extends advanced_testcase {
     /**
      * Setup testcase.
      */
-    public function setUp():void {
+    public function setUp(): void {
         global $CFG;
         $this->resetAfterTest(true);
         $this->setAdminUser();
