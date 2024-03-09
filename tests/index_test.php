@@ -33,7 +33,7 @@ use advanced_testcase;
  * @copyright  2020 Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
-class index_test extends advanced_testcase {
+final class index_test extends advanced_testcase {
 
     /**
      * Setup testcase.
