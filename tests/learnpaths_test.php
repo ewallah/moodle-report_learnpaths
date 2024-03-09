@@ -37,7 +37,7 @@ use moodle_url;
  * @copyright  2020 Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
-class learnpaths_test extends advanced_testcase {
+final class learnpaths_test extends advanced_testcase {
 
     /**
      * Setup testcase.
