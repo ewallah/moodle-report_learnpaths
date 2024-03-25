@@ -24,10 +24,10 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2023102300;
-$plugin->requires = 2022112800;
-$plugin->supported = [401, 403];
-$plugin->release = 'v4.0.1';
+$plugin->version = 2024031000;
+$plugin->requires = 2023042400;
+$plugin->supported = [402, 403];
+$plugin->release = 'v4.2.1';
 $plugin->maturity = MATURITY_RC;
 $plugin->component = 'report_learnpaths';
 $plugin->dependencies = ['enrol_coursecompleted' => ANY_VERSION];
