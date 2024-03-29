@@ -31,7 +31,6 @@ namespace report_learnpaths\event;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class report_viewed extends \core\event\base {
-
     /**
      * Init method.
      *
@@ -77,13 +76,13 @@ class report_viewed extends \core\event\base {
     public function get_url() {
         switch ($this->contextlevel) {
             case CONTEXT_USER:
-               return new \moodle_url('/report/learnpaths/index.php',  ['userid' => $this->relateduserid]);
+                return new \moodle_url('/report/learnpaths/index.php', ['userid' => $this->relateduserid]);
             case CONTEXT_COURSE:
-               return new \moodle_url('/report/learnpaths/index.php', ['courseid' => $this->courseid]);
+                return new \moodle_url('/report/learnpaths/index.php', ['courseid' => $this->courseid]);
             case CONTEXT_COURSECAT:
                 return new \moodle_url('/report/learnpaths/index.php', ['categoryid' => $this->contextinstanceid]);
             default:
-               return new \moodle_url('/report/learnpaths/index.php');
+                return new \moodle_url('/report/learnpaths/index.php');
         }
     }
 }
