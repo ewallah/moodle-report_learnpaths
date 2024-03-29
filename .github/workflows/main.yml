@@ -9,11 +9,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        moodle-branch: ['MOODLE_401_STABLE', 'MOODLE_402_STABLE', 'MOODLE_403_STABLE']
-        php: ['8.1']
+        moodle-branch: ['MOODLE_402_STABLE', 'MOODLE_403_STABLE']
+        php: ['8.2']
         database: ['mysqli']
         include:
-          - php: '8.2'
+          - php: '8.3'
             moodle-branch: 'main'
             database: 'mysqli'
 
@@ -57,10 +57,6 @@ jobs:
       - name: phplint
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci --ansi phplint
-
-      - name: phpcpd
-        if: ${{ !cancelled() }}
-        run: moodle-plugin-ci --ansi phpcpd
 
       - name: phpmd
         if: ${{ !cancelled() }}
