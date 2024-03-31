@@ -28,5 +28,6 @@ $ADMIN->add('reports', new admin_externalpage(
     'reportlearnpath',
     get_string('pluginname', 'report_learnpaths'),
     $CFG->wwwroot . '/report/learnpaths/index.php',
-   'report/learnpaths:viewsystem'));
+    'report/learnpaths:viewsystem'
+));
 $settings = null;
