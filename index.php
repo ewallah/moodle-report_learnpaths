@@ -21,6 +21,7 @@
  * @copyright 2020 Renaat Debleu (www.eWallah.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+use core\report_helper;
 
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
@@ -66,7 +67,9 @@ navigation_node::override_active_url($url);
 $PAGE->set_title($str);
 $PAGE->set_heading($str);
 $output = $PAGE->get_renderer('report_learnpaths');
+$pluginname = get_string('pluginname', 'report_learnpaths');
 echo $output->header();
+report_helper::print_report_selector($pluginname);
 echo $output->render_main($renderable);
 echo $output->footer();
 
