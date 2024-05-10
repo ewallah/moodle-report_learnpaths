@@ -18,7 +18,7 @@
  * Learning paths report data.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu <info@eWallah.net>
+ * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace report_learnpaths\output;
@@ -32,7 +32,7 @@ use templatable;
  * Learning paths report data.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu <info@eWallah.net>
+ * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class main implements renderable, templatable {

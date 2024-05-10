@@ -18,7 +18,7 @@
  * Tests for report learnpaths.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu <info@eWallah.net>
+ * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 namespace report_learnpaths;
@@ -34,7 +34,7 @@ use moodle_url;
  * Class for report learnpaths.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu <info@eWallah.net>
+ * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 final class learnpaths_test extends advanced_testcase {

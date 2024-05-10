@@ -18,7 +18,7 @@
  * Privacy main class.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu (www.eWallah.net)
+ * @copyright  eWallah (www.eWallah.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,7 +28,7 @@ namespace report_learnpaths\privacy;
  * Privacy main class.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu (www.eWallah.net)
+ * @copyright  eWallah (www.eWallah.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {
