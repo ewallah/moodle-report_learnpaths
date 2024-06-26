@@ -18,7 +18,8 @@
  * Settings file
  *
  * @package   report_learnpaths
- * @copyright 2020 Renaat Debleu <info@eWallah.net>
+ * @copyright eWallah (www.eWallah.net)
+ * @author    Renaat Debleu <info@eWallah.net>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

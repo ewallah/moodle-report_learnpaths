@@ -18,7 +18,7 @@
  * Tests for report learnpaths.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu <info@eWallah.net>
+ * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
@@ -30,7 +30,7 @@ use advanced_testcase;
  * Class for report learnpaths.
  *
  * @package    report_learnpaths
- * @copyright  2020 Renaat Debleu <info@eWallah.net>
+ * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 final class index_test extends advanced_testcase {
@@ -39,6 +39,7 @@ final class index_test extends advanced_testcase {
      */
     public function setUp(): void {
         global $CFG;
+        parent::setUp();
         $this->resetAfterTest(true);
         $this->setAdminUser();
         $CFG->enablecompletion = true;

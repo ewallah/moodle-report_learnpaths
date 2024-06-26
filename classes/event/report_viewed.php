@@ -18,7 +18,8 @@
  * The Learning path report viewed event.
  *
  * @package   report_learnpaths
- * @copyright 2020 Renaat Debleu <info@eWallah.net>
+ * @copyright eWallah (www.eWallah.net)
+ * @author    Renaat Debleu <info@eWallah.net>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace report_learnpaths\event;
@@ -27,7 +28,8 @@ namespace report_learnpaths\event;
  * The learning paths report viewed event.
  *
  * @package   report_learnpaths
- * @copyright 2020 Renaat Debleu <info@eWallah.net>
+ * @copyright eWallah (www.eWallah.net)
+ * @author    Renaat Debleu <info@eWallah.net>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class report_viewed extends \core\event\base {
