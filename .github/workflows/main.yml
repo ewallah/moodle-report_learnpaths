@@ -47,8 +47,8 @@ jobs:
       - name: add plugin
         uses: actions/checkout@v4
         with:
-          repository: ewallah/enrol_coursecompleted.git
-          ref: main
+          repository: ewallah/moodle-enrol_coursecompleted.git
+          ref: MOODLE_404_STABLE
           path: extras/enrol_coursecompleted
 
       - name: setup PHP
