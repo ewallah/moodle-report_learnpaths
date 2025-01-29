@@ -50,8 +50,8 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file global.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
+     * #[CoversClass(report_learnpaths\output\main)]
+     * #[CoversClass(report_learnpaths\output\renderer)]
      */
     public function test_index_file_global(): void {
         global $CFG, $DB, $PAGE;
@@ -70,8 +70,8 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file coursecat.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
+     * #[CoversClass(report_learnpaths\output\main)]
+     * #[CoversClass(report_learnpaths\output\renderer)]
      */
     public function test_index_file_coursecat(): void {
         global $CFG, $PAGE;
@@ -89,8 +89,8 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file course.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
+     * #[CoversClass(report_learnpaths\output\main)]
+     * #[CoversClass(report_learnpaths\output\renderer)]
      */
     public function test_index_file_course(): void {
         global $CFG, $DB, $PAGE;
@@ -110,8 +110,8 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file user.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
+     * #[CoversClass(report_learnpaths\output\main)]
+     * #[CoversClass(report_learnpaths\output\renderer)]
      */
     public function test_index_file_user(): void {
         global $CFG, $DB, $PAGE;
