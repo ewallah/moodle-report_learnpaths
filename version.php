@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $plugin->version = 2024031000;
 $plugin->requires = 2023042400;
-$plugin->supported = [402, 404];
+$plugin->supported = [405, 500];
 $plugin->release = 'v4.4.1';
 $plugin->maturity = MATURITY_RC;
 $plugin->component = 'report_learnpaths';
