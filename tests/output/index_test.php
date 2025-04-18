@@ -22,9 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-namespace report_learnpaths;
+namespace report_learnpaths\output;
 
 use advanced_testcase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Class for report learnpaths.
@@ -33,6 +34,8 @@ use advanced_testcase;
  * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
+#[CoversClass(main::class)]
+#[CoversClass(renderer::class)]
 final class index_test extends advanced_testcase {
     /**
      * Setup testcase.
@@ -50,8 +53,6 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file global.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_global(): void {
         global $CFG, $DB, $PAGE;
@@ -70,8 +71,6 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file coursecat.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_coursecat(): void {
         global $CFG, $PAGE;
@@ -89,8 +88,6 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file course.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_course(): void {
         global $CFG, $DB, $PAGE;
@@ -110,8 +107,6 @@ final class index_test extends advanced_testcase {
 
     /**
      * Test index file user.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_index_file_user(): void {
         global $CFG, $DB, $PAGE;

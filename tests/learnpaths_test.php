@@ -29,6 +29,7 @@ use context_coursecat;
 use context_system;
 use context_user;
 use moodle_url;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Class for report learnpaths.
@@ -37,6 +38,10 @@ use moodle_url;
  * @copyright  Renaat Debleu <info@eWallah.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
+#[CoversClass(privacy\provider::class)]
+#[CoversClass(output\renderer::class)]
+#[CoversClass(output\main::class)]
+#[CoversClass(event\report_viewed::class)]
 final class learnpaths_test extends advanced_testcase {
     /**
      * Setup testcase.
@@ -54,7 +59,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test privacy.
-     * @covers \report_learnpaths\privacy\provider
      */
     public function test_privacy(): void {
         $privacy = new privacy\provider();
@@ -63,8 +67,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderer.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_renderer(): void {
         global $PAGE;
@@ -78,8 +80,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test page_type_list.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_page_type_list(): void {
         global $CFG;
@@ -92,8 +92,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderable.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_network1(): void {
         global $DB, $PAGE;
@@ -113,8 +111,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderable.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_network2(): void {
         global $PAGE;
@@ -135,8 +131,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test renderable.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_network3(): void {
         global $PAGE;
@@ -154,8 +148,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Tests the report navigation as an admin.
-     * @covers \report_learnpaths\output\main
-     * @covers \report_learnpaths\output\renderer
      */
     public function test_navigation(): void {
         global $CFG, $PAGE, $USER;
@@ -179,7 +171,6 @@ final class learnpaths_test extends advanced_testcase {
 
     /**
      * Test the report viewed event.
-     * @covers \report_learnpaths\event\report_viewed
      */
     public function test_report_viewed(): void {
         $categoryid = $this->getDataGenerator()->create_category()->id;
