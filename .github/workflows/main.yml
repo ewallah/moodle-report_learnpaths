@@ -30,11 +30,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        moodle-branch: ['MOODLE_404_STABLE', 'MOODLE_405_STABLE']
-        php: ['8.2']
+        moodle-branch: ['MOODLE_405_STABLE', 'MOODLE_500_STABLE']
+        php: ['8.3']
         database: ['mariadb', 'pgsql']
         include:
-          - php: '8.3'
+          - php: '8.4'
             moodle-branch: 'main'
             database: 'pgsql'
 
@@ -48,7 +48,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ewallah/moodle-enrol_coursecompleted.git
-          ref: MOODLE_404_STABLE
           path: extras/enrol_coursecompleted
 
       - name: setup PHP
